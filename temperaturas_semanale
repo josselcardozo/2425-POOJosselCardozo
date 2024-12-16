@@ -1,0 +1,44 @@
+# Programación Tradicional
+# Este programa permite ingresar las temperaturas diarias de una semana y calcula el promedio semanal.
+
+def ingresar_temperaturas():
+    """Función para ingresar las temperaturas diarias."""
+    temperaturas = [20, 30, 25, 20, 29, 36, 31]  # Datos predefinidos para los días de la semana
+    return temperaturas
+
+def calcular_promedio(temperaturas):
+    """Función para calcular el promedio de una lista de temperaturas."""
+    return sum(temperaturas) / len(temperaturas)
+
+def main_tradicional():
+    """Función principal del programa en programación tradicional."""
+    temperaturas = ingresar_temperaturas()
+    promedio = calcular_promedio(temperaturas)
+    print(f"El promedio semanal de temperaturas es: {promedio:.2f} °C")
+
+# Llamada a la función principal
+main_tradicional()
+
+
+# Programación Orientada a Objetos
+# Este programa utiliza una clase para representar las temperaturas y realizar los cálculos necesarios.
+
+class ClimaSemanal:
+    """Clase que representa la información climática de una semana."""
+
+    def __init__(self):
+        """Constructor que inicializa la lista de temperaturas."""
+        self.temperaturas = [20, 30, 25, 20, 29, 36, 31]  # Datos predefinidos para los días de la semana
+
+    def calcular_promedio(self):
+        """Método para calcular el promedio semanal de temperaturas."""
+        return sum(self.temperaturas) / len(self.temperaturas)
+
+def main_poo():
+    """Función principal del programa en programación orientada a objetos."""
+    clima = ClimaSemanal()
+    promedio = clima.calcular_promedio()
+    print(f"El promedio semanal de temperaturas es: {promedio:.2f} °C")
+
+# Llamada a la función principal
+main_poo()

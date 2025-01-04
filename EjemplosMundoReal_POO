@@ -1,0 +1,86 @@
+# Clase Cliente
+from datetime import datetime
+
+class Cliente:
+    def __init__(self, nombre, correo):
+        self.nombre = nombre
+        self.correo = correo
+
+    def __str__(self):
+        return f"Cliente: {self.nombre}, Correo: {self.correo}"
+
+# Clase Habitacion
+class Habitacion:
+    def __init__(self, numero, tipo, precio):
+        self.numero = numero
+        self.tipo = tipo
+        self.precio = precio
+        self.disponible = True
+
+    def reservar(self):
+        """Reserva la habitación si está disponible"""
+        if self.disponible:
+            self.disponible = False
+            print(f"Habitación {self.numero} reservada.")
+        else:
+            print(f"Habitación {self.numero} no disponible.")
+
+    def liberar(self):
+        """Libera la habitación"""
+        self.disponible = True
+        print(f"Habitación {self.numero} liberada.")
+
+    def __str__(self):
+        return f"Habitación {self.numero} ({self.tipo}), Precio: ${self.precio}, Disponible: {self.disponible}"
+
+# Clase Reserva
+class Reserva:
+    def __init__(self, cliente, habitacion, fecha_reserva, descuento=0):
+        """
+        Inicializa una nueva reserva.
+        
+        :param cliente: Cliente que realiza la reserva
+        :param habitacion: Habitación que se reserva
+        :param fecha_reserva: Fecha en que se realiza la reserva
+        :param descuento: Descuento aplicado a la reserva (porcentaje)
+        """
+        self.cliente = cliente
+        self.habitacion = habitacion
+        self.fecha_reserva = datetime.strptime(fecha_reserva, "%Y-%m-%d")  # Convierte la fecha de string a objeto datetime
+        self.descuento = descuento  # Descuento en porcentaje
+        self.activa = True
+        self.nombre_reserva = f"Reserva_{self.cliente.nombre.replace(' ', '_')}_{self.habitacion.numero}"
+
+    def aplicar_descuento(self):
+        """Aplica el descuento al precio de la habitación"""
+        if self.descuento > 0:
+            precio_final = self.habitacion.precio * (1 - self.descuento / 100)
+            print(f"Descuento aplicado. Precio final: ${precio_final:.2f}")
+            return precio_final
+        else:
+            print(f"No se aplica descuento. Precio: ${self.habitacion.precio}")
+            return self.habitacion.precio
+
+    def cancelar_reserva(self):
+        """Cancela la reserva y libera la habitación"""
+        self.habitacion.liberar()
+        self.activa = False
+        print(f"Reserva cancelada para {self.cliente.nombre}.")
+
+    def __str__(self):
+        """Muestra los detalles de la reserva"""
+        return f"Reserva {self.nombre_reserva} para {self.cliente.nombre} en habitación {self.habitacion.numero} el {self.fecha_reserva.strftime('%Y-%m-%d')}."
+
+# Crear objetos
+cliente1 = Cliente("Jossel Cardozo", "juanajaime30@outlook.es")
+habitacion1 = Habitacion(101, "Individual", 50)
+
+# Crear y aplicar descuento en la reserva
+reserva1 = Reserva(cliente1, habitacion1, "2025-01-15", descuento=15)  # Descuento del 15%
+habitacion1.reservar()
+
+# Imprimir detalles de la reserva
+print(reserva1)
+
+# Mostrar precio final con descuento
+precio_con_descuento = reserva1.aplicar_descuento()

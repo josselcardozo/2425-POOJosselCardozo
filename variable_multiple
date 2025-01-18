@@ -1,0 +1,59 @@
+# Definición de la clase base (Padre)
+class Animal:
+    # Constructor de la clase base
+    def __init__(self, nombre, edad):
+        self.__nombre = nombre  # Atributo privado (encapsulación)
+        self.__edad = edad      # Atributo privado (encapsulación)
+
+    # Método para obtener el nombre
+    def get_nombre(self):
+        return self.__nombre
+
+    # Método para obtener la edad
+    def get_edad(self):
+        return self.__edad
+
+    # Método polimórfico: hacer sonido
+    def hacer_sonido(self):
+        print("El animal hace un sonido")
+
+# Clase derivada (Hija)
+class Perro(Animal):
+    # Constructor de la clase derivada
+    def __init__(self, nombre, edad, raza):
+        super().__init__(nombre, edad)  # Llamada al constructor de la clase base
+        self.__raza = raza  # Atributo privado
+
+    # Método para obtener la raza
+    def get_raza(self):
+        return self.__raza
+
+    # Sobreescritura del método hacer_sonido para el perro
+    def hacer_sonido(self):
+        print(f"{self.get_nombre()} dice: ¡Guau!")
+
+# Clase derivada (Hija)
+class Gato(Animal):
+    # Constructor de la clase derivada
+    def __init__(self, nombre, edad, color):
+        super().__init__(nombre, edad)  # Llamada al constructor de la clase base
+        self.__color = color  # Atributo privado
+
+    # Método para obtener el color
+    def get_color(self):
+        return self.__color
+
+    # Sobreescritura del método hacer_sonido para el gato
+    def hacer_sonido(self):
+        print(f"{self.get_nombre()} dice: ¡Miau!")
+
+# Instanciando objetos de las clases derivadas
+perro = Perro("Guau", 8, "Mestizo")
+gato = Gato("Miau", 8, "Blanco")
+
+# Llamando a métodos de la clase base y derivadas
+print(f"Nombre del perro: {perro.get_nombre()} - Edad: {perro.get_edad()} - Raza: {perro.get_raza()}")
+perro.hacer_sonido()  # Polimorfismo: El perro hace un sonido específico
+
+print(f"Nombre del gato: {gato.get_nombre()} - Edad: {gato.get_edad()} - Color: {gato.get_color()}")
+gato.hacer_sonido()  # Polimorfismo: El gato hace un sonido específico

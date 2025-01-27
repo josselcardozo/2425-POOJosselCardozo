@@ -1,0 +1,74 @@
+# Definimos una clase que representa un archivo de texto.
+# Esta clase demostrará el uso de constructores y destructores.
+
+class ArchivoTexto:
+    def __init__(self, nombre_archivo, modo):
+        """
+        Constructor: Inicializa un objeto de la clase ArchivoTexto.
+        
+        Args:
+            nombre_archivo (str): Nombre del archivo a manejar.
+            modo (str): Modo en el que se abrirá el archivo ('w', 'r', etc.).
+        
+        Acciones:
+            - Abre el archivo en el modo especificado.
+            - Inicializa los atributos necesarios.
+        """
+        self.nombre_archivo = nombre_archivo
+        self.modo = modo
+        self.archivo = open(nombre_archivo, modo)
+        print(f"Archivo '{self.nombre_archivo}' abierto en modo '{self.modo}'.")
+
+    def escribir(self, texto):
+        """
+        Escribe texto en el archivo si está abierto en modo escritura.
+
+        Args:
+            texto (str): Texto a escribir en el archivo.
+        """
+        if 'w' in self.modo or 'a' in self.modo:
+            self.archivo.write(texto + '\n')
+            print(f"Escrito en el archivo: {texto}")
+        else:
+            print("Error: El archivo no está abierto en modo escritura.")
+
+    def leer(self):
+        """
+        Lee y devuelve el contenido del archivo si está abierto en modo lectura.
+
+        Returns:
+            str: Contenido del archivo.
+        """
+        if 'r' in self.modo:
+            contenido = self.archivo.read()
+            print("Contenido leído del archivo:")
+            print(contenido)
+            return contenido
+        else:
+            print("Error: El archivo no está abierto en modo lectura.")
+
+    def __del__(self):
+        """
+        Destructor: Se llama cuando el objeto se elimina o el programa termina.
+
+        Acciones:
+            - Cierra el archivo si está abierto.
+            - Limpia recursos asociados al objeto.
+        """
+        if not self.archivo.closed:
+            self.archivo.close()
+            print(f"Archivo '{self.nombre_archivo}' cerrado.")
+
+# Programa principal para demostrar el uso de la clase
+if __name__ == "__main__":
+    # Crear un objeto ArchivoTexto para escribir en un archivo
+    archivo_escritura = ArchivoTexto("ejemplo.txt", "w")
+    archivo_escritura.escribir("Hola, este es un ejemplo.")
+    archivo_escritura.escribir("Demostrando constructores y destructores.")
+
+    # Crear otro objeto ArchivoTexto para leer el archivo
+    del archivo_escritura  # Llamada explícita al destructor
+    archivo_lectura = ArchivoTexto("ejemplo.txt", "r")
+    contenido = archivo_lectura.leer()
+
+    # El objeto archivo_lectura será destruido automáticamente al finalizar el programa

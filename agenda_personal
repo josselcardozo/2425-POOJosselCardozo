@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 from tkcalendar import DateEntry
 
+# Función para agregar un evento a la lista
 def agregar_evento():
     fecha = entry_fecha.get()
     hora = entry_hora.get()
@@ -9,12 +10,13 @@ def agregar_evento():
     
     if fecha and hora and descripcion:
         tree.insert("", "end", values=(fecha, hora, descripcion))
-        entry_fecha.set_date("")
-        entry_hora.delete(0, tk.END)
-        entry_descripcion.delete(0, tk.END)
+        entry_fecha.set_date("")  # Restablecer el campo de fecha
+        entry_hora.delete(0, tk.END)  # Limpiar el campo de hora
+        entry_descripcion.delete(0, tk.END)  # Limpiar el campo de descripción
     else:
         messagebox.showwarning("Advertencia", "Todos los campos deben estar llenos.")
 
+# Función para eliminar un evento seleccionado
 def eliminar_evento():
     seleccionado = tree.selection()
     if seleccionado:
@@ -25,13 +27,14 @@ def eliminar_evento():
 
 # Configuración de la ventana principal
 root = tk.Tk()
-root.title("Agenda Personal")
-root.geometry("500x400")
+root.title("Agenda Personal")  # Título de la ventana
+root.geometry("500x400")  # Tamaño de la ventana
 
+# Crear un marco para los campos de entrada
 frame_entrada = tk.Frame(root)
 frame_entrada.pack(pady=10)
 
-# Labels y campos de entrada
+# Labels y campos de entrada para la fecha, hora y descripción
 label_fecha = tk.Label(frame_entrada, text="Fecha:")
 label_fecha.grid(row=0, column=0, padx=5, pady=5)
 entry_fecha = DateEntry(frame_entrada, width=12, background='darkblue', foreground='white', borderwidth=2)
@@ -47,30 +50,35 @@ label_descripcion.grid(row=2, column=0, padx=5, pady=5)
 entry_descripcion = tk.Entry(frame_entrada)
 entry_descripcion.grid(row=2, column=1, padx=5, pady=5)
 
-# Botones
+# Crear un marco para los botones
 frame_botones = tk.Frame(root)
 frame_botones.pack(pady=10)
 
+# Botón para agregar un evento
 btn_agregar = tk.Button(frame_botones, text="Agregar Evento", command=agregar_evento)
 btn_agregar.grid(row=0, column=0, padx=5)
 
+# Botón para eliminar un evento seleccionado
 btn_eliminar = tk.Button(frame_botones, text="Eliminar Evento", command=eliminar_evento)
 btn_eliminar.grid(row=0, column=1, padx=5)
 
+# Botón para salir de la aplicación
 btn_salir = tk.Button(frame_botones, text="Salir", command=root.quit)
 btn_salir.grid(row=0, column=2, padx=5)
 
-# Tabla de eventos
+# Crear un marco para la tabla de eventos
 frame_tabla = tk.Frame(root)
 frame_tabla.pack(pady=10)
 
+# Configurar el TreeView para mostrar la lista de eventos
 tree = ttk.Treeview(frame_tabla, columns=("Fecha", "Hora", "Descripción"), show="headings")
 tree.heading("Fecha", text="Fecha")
 tree.heading("Hora", text="Hora")
 tree.heading("Descripción", text="Descripción")
 tree.pack()
 
-# Agregar evento predeterminado
+# Agregar un evento predeterminado a la lista
 tree.insert("", "end", values=("24/03/2025", "14:00", "Análisis de radiación"))
 
+# Iniciar el bucle principal de la aplicación
 root.mainloop()
